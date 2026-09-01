@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!-- 佔位待換：搜尋「TODO-CONTACT」共 2 處，換成正式 LINE / Discord 連結後即可對外 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xassault｜黃金日內自動交易系統</title>
+<meta name="description" content="二十年手動黃金交易方法，忠實系統化。真實回測數據逐月攤開，含虧損月。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#131210; --surface:#1c1a16; --surface2:#232019; --line:#2e2a22;
+  --ink:#ece6d8; --ink2:#a89f8c; --ink3:#8e8473;
+  --gold:#d4a843; --gold-deep:#b8892a; --loss:#c96a5a;
+  --chip-bg:#2a2620;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#faf7f0; --surface:#ffffff; --surface2:#f2ede1; --line:#e2dbc9;
+    --ink:#221e15; --ink2:#6b6252; --ink3:#726c5e;
+    --gold:#7d6219; --gold-deep:#7d6219; --loss:#a8513f;
+    --chip-bg:#efe9da;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#faf7f0; --surface:#ffffff; --surface2:#f2ede1; --line:#e2dbc9;
+  --ink:#221e15; --ink2:#6b6252; --ink3:#726c5e;
+  --gold:#7d6219; --gold-deep:#7d6219; --loss:#a8513f;
+  --chip-bg:#efe9da;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Noto Sans TC',"PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+b,strong{font-weight:500}
+p{max-width:34em;text-wrap:pretty}
+h1,h2,h3{font-family:'Noto Serif TC',"PingFang TC",serif;line-height:1.45;text-wrap:balance;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:34px}
+.eyebrow{align-self:flex-start;display:inline-flex;align-items:center;
+  font-size:16px;letter-spacing:.1em;font-weight:700;color:var(--gold);
+  background:var(--chip-bg);border:1px solid var(--gold);border-radius:99px;padding:6px 18px}
+.hero .eyebrow{display:flex;width:fit-content;margin-bottom:14px}
+.sec-head h2{font-size:26px}
+.sec-head p{margin:0;color:var(--ink2)}
+/* hero */
+.hero{padding:72px 0 48px}
+.hero h1{font-size:52px;letter-spacing:.04em;line-height:1.15}
+.hero h1 span{color:var(--gold)}
+.thesis{font-family:'Noto Serif TC',"PingFang TC",serif;font-size:22px;font-weight:600;margin:20px 0 12px}
+.hero p.sub{color:var(--ink2);margin:0 0 28px;max-width:34em}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 22px;border-radius:4px;text-decoration:none;
+  font-weight:500;font-size:16px;border:1px solid var(--gold)}
+.btn.primary{background:var(--gold);color:var(--bg)}
+.btn.ghost{color:var(--gold)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* 徽章列 */
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 26px}
+.badge{font-size:13px;color:var(--ink2);background:var(--chip-bg);border:1px solid var(--line);
+  border-radius:99px;padding:3px 13px}
+/* 卡片（場景、統計、FAQ 共用同一套） */
+.cards{display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px 24px}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{margin:0;color:var(--ink2);max-width:none}
+.card p+p{margin-top:10px}
+.card .a{color:var(--ink)}
+.card .a b{color:var(--gold)}
+/* 統計條（為什麼選我們） */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+@media(max-width:560px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px;text-align:center}
+.stat .num{font-size:30px;font-weight:500;color:var(--gold)}
+.stat .lbl{font-size:13px;color:var(--ink2);margin-top:4px}
+.stat .src{font-size:12.5px;color:var(--ink3);margin-top:2px}
+/* 清單式段落（紀律） */
+.rules{border-top:1px solid var(--line)}
+.rule{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+.rule h3{font-size:17px;color:var(--gold)}
+.rule p{margin:0;color:var(--ink2)}
+@media(max-width:560px){.rule{grid-template-columns:1fr;gap:4px}}
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+@media(max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}.kpis .kpi:first-child{grid-column:1/-1}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.kpi .lbl{font-size:13px;color:var(--ink3)}
+.kpi .val{font-size:21px;font-weight:500;margin-top:2px}
+.kpi .sub{font-size:13px;color:var(--ink2)}
+.chart-box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 8px 6px;position:relative}
+.chart-box svg{display:block;width:100%;height:auto}
+.tip{position:absolute;pointer-events:none;background:var(--surface2);border:1px solid var(--line);
+  border-radius:4px;padding:6px 10px;font-size:12.5px;line-height:1.5;display:none;white-space:nowrap;z-index:2}
+.tbl-wrap{overflow-x:auto;margin-top:26px}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:14.5px}
+th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th{color:var(--ink3);font-weight:500;font-size:12.5px}
+th:first-child,td:first-child{text-align:left}
+td{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+td:first-child{font-family:'Noto Sans TC',"PingFang TC",sans-serif}
+td.neg{color:var(--loss)}
+tr.sum td{border-top:2px solid var(--ink3);font-weight:500;border-bottom:none}
+.callout{margin-top:26px;border-left:3px solid var(--gold);padding:4px 0 4px 18px}
+.callout p{margin:0;color:var(--ink2)}
+.callout b{color:var(--ink)}
+.cond{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:6px;
+  padding:16px 20px;font-size:14.5px;color:var(--ink2)}
+.cond b{color:var(--ink)}
+.spec-v{text-align:left;font-family:'Noto Sans TC',"PingFang TC",sans-serif;color:var(--ink)}
+/* FAQ */
+.faq{border-top:1px solid var(--line)}
+.qa{padding:20px 0;border-bottom:1px solid var(--line)}
+.qa h3{font-size:17px;margin-bottom:8px}
+.qa p{margin:0;color:var(--ink2)}
+/* 風險 */
+.risk ol{margin:0;padding-left:22px;color:var(--ink2)}
+.risk li{margin:10px 0;max-width:34em;text-wrap:pretty}
+.risk b{color:var(--ink)}
+/* CTA */
+.cta{background:var(--surface);text-align:center}
+.cta h2{font-size:26px;margin-bottom:10px}
+.cta p{color:var(--ink2);max-width:30em;margin:0 auto 26px;text-wrap:balance}
+.chip{display:inline-block;font-size:12.5px;background:var(--chip-bg);color:var(--ink2);
+  border-radius:99px;padding:1px 9px;margin-left:8px;vertical-align:2px}
+footer{padding:36px 0 48px;color:var(--ink3);font-size:12.5px;line-height:1.8;border-top:1px solid var(--line)}
+footer p{margin:0}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">XAUUSD · 黃金日內自動交易</div>
+    <h1>X<span>assault</span></h1>
+    <p class="thesis">二十年手動黃金交易方法，忠實系統化。</p>
+    <p class="sub">一位資深交易者用手做了二十年的黃金日內方法，被逐條翻譯成 24 小時自動執行的程式。不發明新邏輯、不順手優化——連虧損的月份、每一筆交易的風險，數據也全部攤開。</p>
+    <div class="badges">
+      <span class="badge">不用馬丁格爾</span><span class="badge">不用網格</span><span class="badge">不加碼攤平</span><span class="badge">每一筆都有硬停損</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn primary" href="#perf">看真實回測</a>
+      <a class="btn ghost" href="#contact">聯絡我們</a>
+    </div>
+  </div>
+</header>
+
+<section id="scenes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">你是哪一種</div>
+      <h2>三種人，同一個問題</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>忙碌的上班族</h3>
+        <p>黃金最會走的時段，多半在台灣的深夜到凌晨。手動做，等於拿睡眠換交易；不做，等於看得到吃不到。</p>
+        <p class="a"><b>系統的回應：</b>程式 24 小時盯著規則該盯的位置。你負責生活，它負責不睡覺。</p>
+      </div>
+      <div class="card">
+        <h3>手不聽話的交易者</h3>
+        <p>計畫好的停損，到價卻捨不得按；想等回調，看它一直走就忍不住追。每一條你違反過的紀律，你其實都懂。</p>
+        <p class="a"><b>系統的回應：</b>它做不到違反。追價、凹單、不掛停損——這些錯誤在程式裡根本不存在。</p>
+      </div>
+      <div class="card">
+        <h3>小額起步的觀望者</h3>
+        <p>以為程式交易是大戶的遊戲——投入太多不敢，太少又怕撐不住波動。</p>
+        <p class="a"><b>系統的回應：</b>它跑最小 0.01 手，1,000 美元就能起步。2026 回測 133 筆，最大單筆虧損 22.9 美元——約本金的 2.3%。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">為什麼選我們</div>
+      <h2>錯很多次，但每次錯得很小</h2>
+      <p>華爾街最老的一句話：截斷虧損，讓利潤奔跑。多數人都會背，很少人做得到——因為做到它需要的不是聰明，是每一單都不例外的紀律。</p>
+    </div>
+
+    <p style="margin:0 0 6px">先看一組會嚇到你的真實數字。2026 年回測 133 筆交易裡：<b>73 筆停損、37 筆保本出場、只有 23 筆真正獲利</b>。聽起來很失敗？再看下一層——</p>
+    <div class="stats">
+      <div class="stat"><div class="num mono">−10.6</div><div class="lbl">平均一筆虧損（USD）</div><div class="src">總虧損 772.42 ÷ 73 筆</div></div>
+      <div class="stat"><div class="num mono">+75.8</div><div class="lbl">平均一筆獲利（USD）</div><div class="src">總獲利 1,742.72 ÷ 23 筆</div></div>
+      <div class="stat"><div class="num mono">7.2×</div><div class="lbl">賺賠比（平均獲利 ÷ 平均虧損）</div><div class="src">虧損砍在萌芽，利潤抱到成熟</div></div>
+    </div>
+    <p style="margin:0 0 26px">一次獲利，抵掉七次停損。所以勝率只有 45%，八個月帳戶還是 +97.0%——平均每下一筆單，期望值是 <b class="mono">+7.3 美元</b>。這不是新發明，是所有活得久的交易者共同的樣子：<b>不追求每次都對，只確保錯的時候便宜、對的時候豐收。</b></p>
+
+    <p style="margin:0 0 14px;color:var(--ink2)">這套數學能成立，靠的是四條寫死在程式裡的紀律：</p>
+    <div class="rules">
+      <div class="rule"><h3>永不追價</h3><p>只在計畫價位等成交，實際成交價必定不劣於原定價位。行情跑了就讓它跑，永遠有下一個位置。</p></div>
+      <div class="rule"><h3>先有停損，才有掛單</h3><p>停損位置在下單之前就決定好，並且隨訂單一起送到券商端——不是掛在心裡，也不是事後再補。</p></div>
+      <div class="rule"><h3>一天多空各一張</h3><p>每天做多、做空的額度各只有一次。不加碼攤平、不凹單翻本，單日虧損被天生限制住。</p></div>
+      <div class="rule"><h3>該停手就停手</h3><p>行情走到不該做的樣子，系統當日就停止開新單。空手也是一種部位。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="perf">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">真實數據</div>
+      <h2>2026 年回測，逐月攤開</h2>
+      <p>曲線由回測逐筆交易紀錄重建，數字未經任何修飾——含虧損的月份。</p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="chart-box">
+      <svg id="chart" viewBox="0 0 880 360" role="img" aria-label="權益曲線"></svg>
+      <div class="tip mono" id="tip"></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table aria-label="2026 月別損益">
+        <thead><tr><th>2026</th><th>淨損益 (USD)</th><th>佔本金</th></tr></thead>
+        <tbody>
+          <tr><td>1 月</td><td class="neg">−90.34</td><td class="neg">−9.03%</td></tr>
+          <tr><td>2 月</td><td>+104.02</td><td>+10.40%</td></tr>
+          <tr><td>3 月</td><td>+188.75</td><td>+18.88%</td></tr>
+          <tr><td>4 月</td><td>+272.80</td><td>+27.28%</td></tr>
+          <tr><td>5 月</td><td>+153.51</td><td>+15.35%</td></tr>
+          <tr><td>6 月</td><td>+256.53</td><td>+25.65%</td></tr>
+          <tr><td>7 月</td><td>+57.55</td><td>+5.76%</td></tr>
+          <tr><td>8 月（至 27 日）</td><td>+27.48</td><td>+2.75%</td></tr>
+          <tr class="sum"><td>合計</td><td>+970.30</td><td>+97.03%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><b>1 月是虧損的月份，我們照樣放上來。</b>虧損月虧得住、單筆虧損有上限，才是紀律真正的證明。行情隨時在更新，這裡永遠放最新一段完整數據——更長的歷史與之後的實測，聯絡我們就會定期收到。</p>
+    </div>
+
+    <div class="cond">
+      <b>回測條件全揭露：</b>XAUUSD（黃金）H1 週期 · MT4 策略測試器 · 點差固定 50 點 · 固定 0.01 手（最小手數）· 起始本金 1,000 USD · 期間 2026 年 1 月 2 日至 8 月 27 日。本頁全部百分比以同一本金基準計，未複利；勝率含保本出場。單筆最大虧損 22.86 USD＝本金 2.3%。
+    </div>
+  </div>
+</section>
+
+<section id="spec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">系統規格</div>
+      <h2>建議環境與運作方式</h2>
+    </div>
+    <div class="tbl-wrap">
+      <table aria-label="系統規格">
+        <tbody>
+          <tr><td>交易商品</td><td class="spec-v">XAUUSD（黃金），單一商品</td></tr>
+          <tr><td>圖表週期</td><td class="spec-v">H1（日內策略）</td></tr>
+          <tr><td>平台</td><td class="spec-v">MetaTrader 4</td></tr>
+          <tr><td>建議資金</td><td class="spec-v">1,000 USD（0.01 手起）</td></tr>
+          <tr><td>建議槓桿</td><td class="spec-v">1:100 以上</td></tr>
+          <tr><td>每日單量</td><td class="spec-v">多、空各最多一張，成交才占額度</td></tr>
+          <tr><td>停損方式</td><td class="spec-v">下單前決定，隨訂單送到券商端</td></tr>
+          <tr><td>不使用</td><td class="spec-v">馬丁格爾、網格、加碼攤平、隱藏邏輯</td></tr>
+          <tr><td>運行建議</td><td class="spec-v">VPS 24 小時運行、低點差券商</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:18px 0 0;color:var(--ink2);font-size:14.5px">每一筆交易在開倉之前，進場位置、停損位置就已經決定好——沒有事後補救，也沒有凹單的空間。</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">常見問題</div>
+      <h2>你大概會想問的</h2>
+    </div>
+    <div class="faq">
+      <div class="qa">
+        <h3>需要多少資金？</h3>
+        <p>系統以最小 0.01 手運作，1,000 美元即可起步。2026 回測的單筆最大虧損約 22.9 美元，佔本金約 2.3%；資金放大時，報酬與回撤同比例增減。</p>
+      </div>
+      <div class="qa">
+        <h3>我需要懂交易或盯盤嗎？</h3>
+        <p>不需要。系統全自動偵測、掛單、停損、出場；你要做的是準備好帳戶，然後讓它照規則跑。我們不賣課、不教方法。</p>
+      </div>
+      <div class="qa">
+        <h3>最壞情況會虧多少？</h3>
+        <p>每一筆的停損在下單前就決定好、隨單送到券商端。2026 年回測 133 筆中最大單筆虧損 22.9 美元（本金 2.3%）、最大回撤 22.0%。要說實話的部分：極端行情的跳空與滑點可能讓實際虧損大於停損位，這是所有交易系統共同的風險，沒有例外。</p>
+      </div>
+      <div class="qa">
+        <h3>回測數字能信嗎？</h3>
+        <p>本頁條件全部揭露：固定點差 50 點、最小手數、期間與本金都寫明，曲線由逐筆交易紀錄重建。實盤的點差、滑點會造成差異，所以我們接下來會用同樣標準持續公開實測數據——賺賠都報。</p>
+      </div>
+      <div class="qa">
+        <h3>為什麼不公開進出場規則？</h3>
+        <p>方法是一位交易者二十年的核心資產，公開規則等於送走它。我們選擇公開的是結果與條件：績效逐月攤開、虧損照報、回測條件全寫明——你用數據判斷，不用信故事。</p>
+      </div>
+      <div class="qa">
+        <h3>怎麼收費？</h3>
+        <p>現階段開放以獲利的 10% 作為運行費用——有獲利才計費，沒有獲利就不產生費用。</p>
+      </div>
+      <div class="qa">
+        <h3>怎麼開始？</h3>
+        <p>現在是名單階段：聯絡我們，實測數據更新與正式開放消息會第一時間通知你。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="risk">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">先講醜話</div>
+      <h2>三件你必須知道的事</h2>
+    </div>
+    <ol>
+      <li><b>回測不代表未來績效。</b>以上全部是歷史數據；任何跟你說「保證獲利」的，先跑。</li>
+      <li><b>這是回測，不是實盤對帳單。</b>條件全部揭露如上；實測開始後，數據會以同樣標準持續公開。</li>
+      <li><b>槓桿商品交易有風險，可能損失全部本金。</b>本頁為系統介紹，不構成投資建議；請只用虧得起的錢參與。</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <h2>聯絡我們</h2>
+    <p>實測數據更新、正式開放消息，第一時間通知你。只發數據，不發廢話。</p>
+    <div class="btn-row" style="justify-content:center">
+      <!-- TODO-CONTACT: 換成 LINE 官方帳號連結 https://lin.ee/xxxx -->
+      <a class="btn primary" href="#contact">LINE 官方帳號<span class="chip">開通中</span></a>
+      <!-- TODO-CONTACT: 換成 Discord 伺服器邀請連結 -->
+      <a class="btn ghost" href="#contact">Discord<span class="chip">開通中</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Xassault · 黃金日內自動交易系統。本頁所有績效均為歷史回測數據，來源與計算口徑如「回測條件全揭露」所列；回測績效不代表未來收益。槓桿商品交易具高風險，可能損失全部投入資金。本頁不構成投資建議或任何獲利承諾。</p>
+  </div>
+</footer>
+
+<script>
+const DATA = {"2026":[["2026-01-02T02:56:26",988.96],["2026-01-05T03:02:04",977.66],["2026-01-07T08:46:04",968.32],["2026-01-08T03:09:38",968.32],["2026-01-08T07:30:36",959.03],["2026-01-12T10:48:05",959.03],["2026-01-14T07:01:33",950.85],["2026-01-15T05:27:03",943.03],["2026-01-16T17:25:37",943.03],["2026-01-20T06:35:38",935.7],["2026-01-21T06:19:30",930.41],["2026-01-22T19:22:37",920.97],["2026-01-26T03:11:39",909.66],["2026-01-27T11:59:39",909.66],["2026-02-02T07:44:36",895.03],["2026-02-12T18:11:37",879.47],["2026-02-13T03:05:13",863.91],["2026-02-17T02:52:18",851.2],["2026-02-18T05:04:05",837.26],["2026-02-19T08:45:04",822.3],["2026-02-20T15:20:05",822.3],["2026-02-24T03:15:28",1026.2],["2026-02-25T03:14:26",1013.68],["2026-02-26T16:30:15",1013.68],["2026-02-27T07:30:27",1013.68],["2026-03-03T16:44:19",1004.32],["2026-03-04T03:01:22",988.43],["2026-03-05T15:20:36",988.43],["2026-03-06T03:51:36",1043.53],["2026-03-06T13:56:19",1043.53],["2026-03-11T15:49:36",1032.88],["2026-03-12T00:56:20",1021.01],["2026-03-17T06:44:28",1010.76],["2026-03-18T12:35:05",1010.76],["2026-03-18T12:35:17",1009.95],["2026-03-19T08:35:27",999.08],["2026-03-19T15:53:39",1263.19],["2026-03-23T07:30:28",1263.19],["2026-03-27T17:21:15",1240.33],["2026-03-30T14:44:23",1218.89],["2026-03-31T03:02:27",1202.43],["2026-03-31T03:16:18",1202.43],["2026-04-02T04:03:39",1185.76],["2026-04-06T12:00:16",1168.14],["2026-04-07T22:19:38",1168.14],["2026-04-08T13:16:27",1330.6],["2026-04-09T03:07:40",1316.04],["2026-04-09T04:10:37",1316.04],["2026-04-09T18:17:38",1381.72],["2026-04-13T02:00:22",1512.46],["2026-04-16T03:02:13",1502.05],["2026-04-17T15:48:29",1492.31],["2026-04-21T09:00:38",1523.74],["2026-04-21T10:02:26",1514.7],["2026-04-23T20:42:37",1504.62],["2026-04-24T07:22:27",1494.11],["2026-04-28T08:00:26",1484.89],["2026-04-30T03:00:27",1475.23],["2026-05-01T07:32:36",1475.23],["2026-05-01T09:19:05",1525.47],["2026-05-01T17:12:18",1515.47],["2026-05-04T13:03:37",1507.46],["2026-05-06T02:12:37",1497.28],["2026-05-11T01:00:00",1503.0],["2026-05-11T03:17:38",1492.3],["2026-05-12T18:22:39",1482.13],["2026-05-14T03:17:01",1482.13],["2026-05-15T04:07:37",1474.47],["2026-05-15T17:18:30",1576.21],["2026-05-18T03:33:38",1567.04],["2026-05-19T02:13:28",1559.03],["2026-05-19T16:31:14",1549.54],["2026-05-20T04:36:27",1539.29],["2026-05-20T15:34:40",1540.62],["2026-05-21T04:10:29",1533.66],["2026-05-25T04:23:33",1533.66],["2026-05-26T07:58:03",1561.44],["2026-05-27T01:00:16",1608.31],["2026-05-27T09:31:37",1600.69],["2026-05-28T17:14:38",1591.71],["2026-05-29T04:15:36",1582.38],["2026-05-29T22:57:17",1628.74],["2026-06-01T15:22:02",1628.74],["2026-06-03T23:32:36",1628.74],["2026-06-04T07:34:36",1682.5],["2026-06-05T03:12:36",1673.48],["2026-06-08T10:24:19",1835.04],["2026-06-09T15:09:39",1835.04],["2026-06-10T04:03:39",1824.26],["2026-06-18T19:36:28",1811.76],["2026-06-23T04:17:27",1811.76],["2026-06-24T02:38:13",1802.95],["2026-06-24T17:12:16",1885.27],["2026-06-26T10:27:17",1885.27],["2026-07-01T16:38:29",1874.21],["2026-07-07T04:27:27",1862.93],["2026-07-07T15:09:36",1851.64],["2026-07-09T05:26:37",1851.64],["2026-07-10T06:00:27",1851.64],["2026-07-10T17:33:01",1901.44],["2026-07-13T01:48:36",1892.87],["2026-07-16T08:30:38",1892.87],["2026-07-17T05:32:38",1892.87],["2026-07-20T05:42:29",1892.87],["2026-07-21T18:17:36",1892.87],["2026-07-22T16:28:04",1892.87],["2026-07-23T14:40:39",1884.74],["2026-07-27T01:00:00",1885.07],["2026-07-27T04:01:38",1885.07],["2026-07-29T22:33:37",1956.16],["2026-07-30T17:00:36",1950.71],["2026-07-31T04:50:39",1942.82],["2026-08-03T16:38:04",1933.96],["2026-08-04T18:10:13",1933.96],["2026-08-05T05:25:25",1925.18],["2026-08-07T11:06:37",1925.18],["2026-08-10T04:05:19",1914.21],["2026-08-10T04:27:39",2003.15],["2026-08-10T09:43:28",1992.18],["2026-08-12T15:34:19",1992.18],["2026-08-13T03:34:26",1982.87],["2026-08-13T05:30:15",1982.87],["2026-08-13T08:42:28",2004.42],["2026-08-14T03:26:28",1994.65],["2026-08-14T14:50:36",1984.88],["2026-08-17T03:44:39",1976.12],["2026-08-18T17:53:29",1967.73],["2026-08-19T03:13:38",1961.19],["2026-08-21T07:21:28",1950.39],["2026-08-24T17:21:14",1950.39],["2026-08-25T22:17:17",1970.3],["2026-08-26T15:30:39",1970.3],["2026-08-27T16:34:37",1970.3]]};
+const KPI = {
+ "2026":{net:"+970.30",ret:"+97.0%",pf:"2.26",dd:"22.0%",ddu:"220.18",worst:"2.3%",worstu:"22.86",n:"133",wr:"45.1%",period:"2026 年 1–8 月"}
+};
+const svg=document.getElementById('chart'), tip=document.getElementById('tip'), kpisEl=document.getElementById('kpis');
+const NS='http://www.w3.org/2000/svg';
+function css(v){return getComputedStyle(document.body).getPropertyValue(v).trim()}
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e}
+function renderKpis(){
+  const k=KPI["2026"];
+  kpisEl.innerHTML=
+   `<div class="kpi"><div class="lbl">淨損益（${k.period}）</div><div class="val mono">${k.net} <span style="font-size:13px">USD</span></div><div class="sub mono">${k.ret}（本金 1,000 USD，未複利）</div></div>`+
+   `<div class="kpi"><div class="lbl">最大回撤</div><div class="val mono">${k.dd}</div><div class="sub mono">${k.ddu} USD · MT4 報表口徑</div></div>`+
+   `<div class="kpi"><div class="lbl">最大單筆虧損</div><div class="val mono">${k.worst}</div><div class="sub mono">${k.worstu} USD · 133 筆中最壞一筆</div></div>`+
+   `<div class="kpi"><div class="lbl">獲利係數</div><div class="val mono">${k.pf}</div><div class="sub">總獲利 ÷ 總虧損</div></div>`+
+   `<div class="kpi"><div class="lbl">交易筆數</div><div class="val mono">${k.n}</div><div class="sub">整段期間</div></div>`+
+   `<div class="kpi"><div class="lbl">勝率</div><div class="val mono">${k.wr}</div><div class="sub">含保本出場</div></div>`;
+}
+let px=[],py=[],pts=[];
+function renderChart(){
+  const rows=DATA["2026"]; pts=rows;
+  const W=880,H=360,L=64,R=24,T=18,B=40;
+  const gold=css('--gold-deep')||'#b8892a', line=css('--line'), ink2=css('--ink2'), ink3=css('--ink3');
+  const t0=Date.parse(rows[0][0])-864e5;
+  const tEnd=Date.parse(rows[rows.length-1][0])+864e5*2;
+  let lo=1000,hi=1000;
+  rows.forEach(r=>{lo=Math.min(lo,r[1]);hi=Math.max(hi,r[1])});
+  const pad=(hi-lo)*0.08; lo-=pad; hi+=pad;
+  const X=t=>L+(t-t0)/(tEnd-t0)*(W-L-R), Y=v=>T+(hi-v)/(hi-lo)*(H-T-B);
+  svg.innerHTML='';
+  const step=Math.max(50,Math.ceil((hi-lo)/4/50)*50), y0=Math.ceil(lo/step)*step;
+  for(let v=y0;v<=hi;v+=step){
+    svg.appendChild(el('line',{x1:L,x2:W-R,y1:Y(v),y2:Y(v),stroke:line,'stroke-width':1}));
+    const t=el('text',{x:L-8,y:Y(v)+4,'text-anchor':'end',fill:ink3,'font-size':11,class:'mono'});
+    t.textContent=v.toLocaleString(); svg.appendChild(t);
+  }
+  for(let m=2;m<9;m++){
+    const t=Date.parse('2026-'+String(m).padStart(2,'0')+'-01');
+    if(t<t0||t>tEnd)continue;
+    const lbl=el('text',{x:X(t),y:H-14,'text-anchor':'middle',fill:ink3,'font-size':11});
+    lbl.textContent=m+'月'; svg.appendChild(lbl);
+  }
+  svg.appendChild(el('line',{x1:L,x2:W-R,y1:Y(1000),y2:Y(1000),stroke:ink3,'stroke-width':1,'stroke-dasharray':'4 4'}));
+  const bl=el('text',{x:W-R,y:Y(1000)-6,'text-anchor':'end',fill:ink3,'font-size':11});
+  bl.textContent='起始本金 1,000'; svg.appendChild(bl);
+  px=[];py=[];
+  let d='M'+X(t0).toFixed(1)+' '+Y(1000).toFixed(1);
+  rows.forEach(r=>{const x=X(Date.parse(r[0])),yy=Y(r[1]);px.push(x);py.push(yy);d+='L'+x.toFixed(1)+' '+yy.toFixed(1)});
+  const fill=el('path',{d:d+`L${px[px.length-1].toFixed(1)} ${Y(lo)}L${X(t0).toFixed(1)} ${Y(lo)}Z`,fill:gold,opacity:.10});
+  svg.appendChild(fill);
+  svg.appendChild(el('path',{d,fill:'none',stroke:gold,'stroke-width':2,'stroke-linejoin':'round'}));
+  const ex=px[px.length-1],ey=py[py.length-1],ev=rows[rows.length-1][1];
+  svg.appendChild(el('circle',{cx:ex,cy:ey,r:4,fill:gold}));
+  const elab=el('text',{x:ex-8,y:ey-10,'text-anchor':'end',fill:css('--ink'),'font-size':12.5,'font-weight':600,class:'mono'});
+  elab.textContent=ev.toLocaleString(undefined,{minimumFractionDigits:2}); svg.appendChild(elab);
+  svg.appendChild(el('line',{id:'xh',x1:0,x2:0,y1:T,y2:H-B,stroke:ink2,'stroke-width':1,opacity:0}));
+  svg.appendChild(el('circle',{id:'hdot',r:4.5,fill:gold,stroke:css('--surface'),'stroke-width':2,opacity:0}));
+}
+const box=document.querySelector('.chart-box');
+svg.addEventListener('pointermove',e=>{
+  if(!px.length)return;
+  const r=svg.getBoundingClientRect(), sx=(e.clientX-r.left)/r.width*880;
+  let i=0,best=1e9;
+  for(let j=0;j<px.length;j++){const d=Math.abs(px[j]-sx);if(d<best){best=d;i=j}}
+  const xh=svg.querySelector('#xh'),hd=svg.querySelector('#hdot');
+  xh.setAttribute('x1',px[i]);xh.setAttribute('x2',px[i]);xh.setAttribute('opacity',.4);
+  hd.setAttribute('cx',px[i]);hd.setAttribute('cy',py[i]);hd.setAttribute('opacity',1);
+  const p=pts[i], pl=(i?p[1]-pts[i-1][1]:p[1]-1000);
+  tip.style.display='block';
+  tip.innerHTML=p[0].slice(0,16).replace('T',' ')+'<br>權益 <b>'+p[1].toLocaleString(undefined,{minimumFractionDigits:2})+'</b><br>當筆 '+(pl>=0?'+':'')+pl.toFixed(2);
+  const bw=box.clientWidth, tx=px[i]/880*bw;
+  tip.style.left=Math.min(Math.max(8,tx+14),bw-tip.offsetWidth-8)+'px';
+  tip.style.top=(py[i]/360*box.clientHeight-10)+'px';
+});
+svg.addEventListener('pointerleave',()=>{
+  tip.style.display='none';
+  const xh=svg.querySelector('#xh'),hd=svg.querySelector('#hdot');
+  if(xh)xh.setAttribute('opacity',0); if(hd)hd.setAttribute('opacity',0);
+});
+if(window.matchMedia){window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',renderChart)}
+renderKpis(); renderChart();
+</script>
+
+</body>
+</html>
